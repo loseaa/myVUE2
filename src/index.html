@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My App</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="myVue.js"></script>
+  <script>
+    const Vue=MyVue.Vue;
+    
+    const vm = new Vue({
+      el:'#app',
+      data:{
+        msg:{
+          a:{
+            b:{
+              c:4543,
+            }
+          }
+        }
+      }
+    })
+    console.log(vm);
+    
+  </script>
+</body>
+</html>
