@@ -4,10 +4,15 @@ export function initData(vm){
     observer(vm.$data);
 }
 
+import {arrmethods} from '../array.js';
+
+
 function observer(obj){
     if(typeof obj !== 'object' || obj === null){
         return obj;
     }
+    if(obj.__ob__)
+        return obj;
     return new Observer(obj);
 }
 
@@ -33,11 +38,28 @@ function defineReactive(obj,key,value){
 class Observer{
     constructor(obj){
         this.value = obj;
-        this.walk(obj);
+        Object.defineProperty(this.value,"__ob__",{
+            value:this,
+            enumerable:false,
+            writable:true,
+            configurable:true
+        })
+        if(Array.isArray(obj)){
+            this.observerArray()
+            obj.__proto__=arrmethods;
+        }
+        else{
+            this.walk(obj);
+        }
     }
     walk(obj){
         for(let key in obj){
             defineReactive(obj,key,obj[key]);
         }
+    }
+    observerArray(){
+        this.value.forEach(item => {
+            observer(item);
+        })
     }
 }
