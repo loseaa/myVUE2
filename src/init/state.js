@@ -2,6 +2,23 @@ export function initData(vm){
     //用户输入的data可能是一个对象 或者函数
     typeof vm.$data === 'function' ? vm.$data = vm.$data() : vm.$data;
     observer(vm.$data);
+
+    //将data代理到vm上
+    for(let key in vm.$data){
+        proxy(vm,key);
+    }
+
+}
+
+function proxy(vm,key){
+    Object.defineProperty(vm,key,{
+        get(){
+            return vm.$data[key];
+        },
+        set(newVal){
+            vm.$data[key]=newVal;
+        }
+    })
 }
 
 import {arrmethods} from '../array.js';
