@@ -1,5 +1,10 @@
 import {initData} from './init/state.js';
 import {template2Function} from './render/index.js';
+
+import {lifecycleMixin} from './lifecycle.js';
+import {renderMixin} from './render/mixin.js';
+
+
 export function Vue(option){
     this.$el = option.el;
     this.$data = option.data;
@@ -7,11 +12,13 @@ export function Vue(option){
     this.$init();
 }
 
+lifecycleMixin(Vue)
+renderMixin(Vue)
+
 Vue.prototype.$init = function(){
 
     //做数据响应式
     initData(this);
-
     //如果制定了el，则直接渲染
     if(this.$el)
     {
@@ -22,6 +29,7 @@ Vue.prototype.$init = function(){
 
 Vue.prototype.$mount = function(el){
     //处理template  el  和 render函数
+    const vm=this;
     if(!this.$options.render)
     {
         let template=this.$options.template;
@@ -32,8 +40,8 @@ Vue.prototype.$mount = function(el){
  
         this.$options.render=template2Function(template);
     }
-    //渲染
-    // this.$options.render.call(this);
+
+    vm._update(vm._render())
 }
 
 

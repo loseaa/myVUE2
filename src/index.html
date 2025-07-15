@@ -5,7 +5,10 @@
   <title>My App</title>
 </head>
 <body>
-  <div id="app"></div>
+  <div id="app" class="container" style="color: red;font-size: 30px;background-color: blue;">
+    <h1>hello {{msg}}</h1>
+    world
+  </div>
   <script src="myVue.js"></script>
   <script>
     const Vue=MyVue.Vue;
@@ -17,7 +20,7 @@
         arr:[{a:1},2,3,4,5],
       }
     })
-    console.log(vm);
+
     
   </script>
 </body>
