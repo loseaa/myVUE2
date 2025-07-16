@@ -40,7 +40,7 @@ Vue.prototype.$mount = function(el){
  
         this.$options.render=template2Function(template);
     }
-
+    this.$el=document.querySelector(el)
     vm._update(vm._render())
 }
 

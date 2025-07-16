@@ -115,7 +115,7 @@ function parseAST(html) {
 
 function generate(el) {
     let code = "";
-    code = `_c(${el.tagName},${el.attrs?.length ? genAttrs(el.attrs) : 'undefined'},
+    code = `_c(${JSON.stringify(el.tagName)},${el.attrs?.length ? genAttrs(el.attrs) : 'undefined'},
     ${generateChildren(el.children)})`
     return code
 }
