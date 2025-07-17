@@ -2,7 +2,6 @@ export function renderMixin(Vue) {
     Vue.prototype._render = function () {
         // 通过执行render函数拿到虚拟节点，将虚拟节点返回
         // console.log();
-        console.log(this.$options.render);
         
         return this.$options.render.call(this)
     }

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>My App</title>
 </head>
+
 <body>
   <div id="app" class="container" style="color: red;font-size: 30px;background-color: blue;">
     <h1 style="border: 1px red solid;">hello {{msg}}</h1>
@@ -12,17 +14,29 @@
   </div>
   <script src="myVue.js"></script>
   <script>
-    const Vue=MyVue.Vue;
-    
+    const Vue = MyVue.Vue;
+    Vue.mixin({
+      created() {
+        console.log('created1111');
+      }
+    })
+    Vue.mixin({
+      created() {
+        console.log('created2222');
+      }
+    })
     const vm = new Vue({
-      el:'#app',
-      data:{
-        msg:'hello vue',
-        arr:[{a:1},2,3,4,5],
+      el: '#app',
+      data: {
+        msg: 'hello vue',
+        arr: [{ a: 1 }, 2, 3, 4, 5],
+      },created(){
+        console.log('created3333');
       }
     })
 
-    
+
   </script>
 </body>
+
 </html>
