@@ -1,3 +1,6 @@
+import {Dep} from '../Dep.js'
+
+
 export function initData(vm){
     //用户输入的data可能是一个对象 或者函数
     typeof vm.$data === 'function' ? vm.$data = vm.$data() : vm.$data;
@@ -9,6 +12,7 @@ export function initData(vm){
     }
 
 }
+
 
 function proxy(vm,key){
     Object.defineProperty(vm,key,{
@@ -35,19 +39,22 @@ function observer(obj){
 
 function defineReactive(obj,key,value){
     observer(value);
-
+    let dep=new Dep();
     Object.defineProperty(obj,key,{
         get(){
-            console.log('get');
+            if(Dep.target){
+                dep.addSub(Dep.target);
+            }
             return value;
         },
         set(newVal){
-            console.log("set");
+            
             if(newVal === value){
                 return;
             }
             observer(newVal)
             value =newVal;
+            dep.notify()
         }
     })
 }

@@ -3,7 +3,7 @@ export function patch(oldVnode, newVnode) {
     let newEl = createEle(newVnode);
     oldVnode.parentNode.replaceChild(newEl, oldVnode);
     document.body.appendChild(newEl);
-
+    return newEl;
 
 }
 

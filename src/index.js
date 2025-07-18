@@ -1,6 +1,6 @@
 import {initData} from './init/state.js';
 import {template2Function} from './render/index.js';
-
+import { mountComponent } from './lifecycle.js';
 import {lifecycleMixin} from './lifecycle.js';
 import {renderMixin} from './render/mixin.js';
 import {globalApi, mergeOptions} from './globalapi/index.js';
@@ -53,7 +53,9 @@ Vue.prototype.$mount = function(el){
         this.$options.render=template2Function(template);
     }
     this.$el=document.querySelector(el)
-    vm._update(vm._render())
+    
+    
+    mountComponent(vm, el);
 }
 
 

@@ -15,25 +15,17 @@
   <script src="myVue.js"></script>
   <script>
     const Vue = MyVue.Vue;
-    Vue.mixin({
-      created() {
-        console.log('created1111');
-      }
-    })
-    Vue.mixin({
-      created() {
-        console.log('created2222');
-      }
-    })
+
     const vm = new Vue({
       el: '#app',
       data: {
         msg: 'hello vue',
         arr: [{ a: 1 }, 2, 3, 4, 5],
-      },created(){
-        console.log('created3333');
       }
     })
+    setTimeout(() => {
+      vm.msg = "sdadawa";
+    }, 1000)
 
 
   </script>
