@@ -27,6 +27,7 @@ methods.forEach((method)=>{
 
             this.__ob__.observerArray(insertArr);
         }
+        this.__ob__.dep.notify();
         return oldArrayMethods[method].apply(this,Args);
     }
 })

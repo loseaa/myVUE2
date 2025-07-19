@@ -12,6 +12,7 @@ export function mountComponent(vm,el){
 
     vm._update(vm._render())
     let updateComponent=()=>{
+        
         vm._update(vm._render());
     }
     new Watcher(vm,updateComponent,()=>{

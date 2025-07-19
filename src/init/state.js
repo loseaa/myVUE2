@@ -30,7 +30,7 @@ import {arrmethods} from '../array.js';
 
 function observer(obj){
     if(typeof obj !== 'object' || obj === null){
-        return obj;
+        return 
     }
     if(obj.__ob__)
         return obj;
@@ -38,12 +38,15 @@ function observer(obj){
 }
 
 function defineReactive(obj,key,value){
-    observer(value);
+    let ob=observer(value);
     let dep=new Dep();
     Object.defineProperty(obj,key,{
         get(){
             if(Dep.target){
                 dep.addSub(Dep.target);
+                if(ob){
+                    ob.dep.addSub(Dep.target);
+                }
             }
             return value;
         },
@@ -62,6 +65,7 @@ function defineReactive(obj,key,value){
 class Observer{
     constructor(obj){
         this.value = obj;
+        this.dep=new Dep()
         Object.defineProperty(this.value,"__ob__",{
             value:this,
             enumerable:false,
