@@ -5,6 +5,7 @@ import {lifecycleMixin} from './lifecycle.js';
 import {renderMixin} from './render/mixin.js';
 import {globalApi, mergeOptions} from './globalapi/index.js';
 import { callHook } from './lifecycle.js';
+import {stateMixin} from './init/state.js';
 
 export function Vue(option){
     this.$el = option.el;
@@ -17,6 +18,7 @@ export function Vue(option){
 lifecycleMixin(Vue)
 renderMixin(Vue)
 globalApi(Vue)
+stateMixin(Vue)
 
 Vue.prototype.$init = function(){
     this.$options=mergeOptions(this.constructor.$options, this.$options);

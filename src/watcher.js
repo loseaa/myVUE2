@@ -1,4 +1,5 @@
 let id = 0;
+import { nextTick } from './util.js';
 import { popTarget, pushTarget } from './Dep.js'
 export class Watcher {
     constructor(vm, exprOrFn, cb) {
@@ -48,9 +49,9 @@ function queueWatcher(watcher) {
     queue.push(watcher);
     
     if (!pending) {
-        setTimeout(() => {
-            flushQueue()
-        }, 0);
+ 
+        nextTick(flushQueue)
+
         pending = true
     }
 

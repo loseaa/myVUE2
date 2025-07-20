@@ -1,4 +1,5 @@
 import {Dep} from '../Dep.js'
+import {nextTick} from "../util.js"
 
 
 export function initData(vm){
@@ -11,6 +12,12 @@ export function initData(vm){
         proxy(vm,key);
     }
 
+}
+
+export function stateMixin(Vue){
+    Vue.prototype.$nextTick=function(fn){
+        nextTick(fn);
+    }
 }
 
 

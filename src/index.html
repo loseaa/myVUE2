@@ -22,12 +22,19 @@
         arr: [{ a: 1 }, 2, 3, 4, 5],
       }
     })
+
+
     setTimeout(() => {
-      vm.msg = "sdadawa";
-      vm.msg = "4";
-      vm.msg = "w";
-      vm.msg = "3";
-    }, 1000)
+          vm.msg = "sdadawa";
+    vm.msg = "4";
+    vm.msg = "w";
+    vm.msg = "3";
+
+    vm.$nextTick(() => {
+      console.log("用户的nextTick");
+    })
+    }, 1000);
+
 
 
   </script>
