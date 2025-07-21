@@ -8,7 +8,7 @@
 
 <body>
   <div id="app" class="container" style="color: red;font-size: 30px;background-color: blue;">
-    {{msg}}
+    {{msg.a.b}}
     world
   </div>
   <script src="myVue.js"></script>
@@ -18,21 +18,28 @@
     const vm = new Vue({
       el: '#app',
       data: {
-        msg: 'hello vue',
+        msg: { a: { b: '123' } },
         arr: [{ a: 1 }, 2, 3, 4, 5],
+      },
+      watch: {
+        'msg.a.b': {
+          handler(newVal, oldVal) {
+            console.log(newVal, oldVal);
+          },
+          immediate: true,
+          deep: true
+        }
       }
     })
 
 
     setTimeout(() => {
-          vm.msg = "sdadawa";
-    vm.msg = "4";
-    vm.msg = "w";
-    vm.msg = "3";
+      vm.msg.a.b = '123';
 
-    vm.$nextTick(() => {
-      console.log("用户的nextTick");
-    })
+
+      vm.$nextTick(() => {
+        console.log("用户的nextTick");
+      })
     }, 1000);
 
 

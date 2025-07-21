@@ -156,7 +156,8 @@ function generateText(child) {
         if(index>lastIndex){
             tokens.push(JSON.stringify(child.text.substring(lastIndex,index)))
         }
-        tokens.push(`_s(${reg[1]})`)
+
+        tokens.push(`_s(${reg[1].split(".").join("?.")})`)
         lastIndex=index+reg[0].length
     }
     //如果没有{{}}，处理普通文本
