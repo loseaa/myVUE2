@@ -29,14 +29,14 @@
           immediate: true,
           deep: true
         }
+      },beforeUpdate(){
+        console.log("beforeUpdate",this);
       }
     })
 
 
     setTimeout(() => {
-      vm.msg.a.b = '123';
-
-
+      vm.msg.a.b = '23523';
       vm.$nextTick(() => {
         console.log("用户的nextTick");
       })

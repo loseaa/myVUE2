@@ -9,7 +9,6 @@ export function lifecycleMixin(Vue) {
 
 export function mountComponent(vm,el){
     callHook(vm, 'beforeMount');
-
     vm._update(vm._render())
     let updateComponent=()=>{
         

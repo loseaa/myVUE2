@@ -37,11 +37,14 @@ export class Watcher {
         return res;
     }
 
-    run() {
+    run() {  
         let oldValue = this.value;
         let newValue = this.get();
         if (this.user) {
             this.cb(newValue, oldValue)
+        }else{
+            this.cb();
+            
         }
         this.value = newValue;
     }
