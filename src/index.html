@@ -8,7 +8,9 @@
 
 <body>
   <div id="app" class="container" style="color: red;font-size: 30px;background-color: blue;">
-    <div>hello</div>
+    <div>{{fullName}}</div>
+    <div>{{fullName}}</div>
+    <div>{{fullName}}</div>
     <p>{{msg.a.b}}</p>
   </div>
   <script src="myVue.js"></script>
@@ -20,25 +22,24 @@
       data: {
         msg: { a: { b: '123' } },
         arr: [{ a: 1 }, 2, 3, 4, 5],
-      },
-      watch: {
-        'msg.a.b': {
-          handler(newVal, oldVal) {
-            console.log(newVal, oldVal);
-          },
-          immediate: true,
-          deep: true
-        }
-      },beforeUpdate(){
+        firstname:'adqwa',
+        lastname:'aasw'
+      }
+    ,beforeUpdate(){
         console.log("beforeUpdate",this);
+      },
+      computed:{
+        fullName(){
+          console.log("computed 执行了");
+          return this.firstname+this.lastname
+        }
       }
     })
+
     setTimeout(() => {
-      vm.msg.a.b='daada'
+      vm.firstname='123'
     }, 1000);
-        setTimeout(() => {
-      vm.msg.a.b='456'
-    }, 2000);
+
 
 
 

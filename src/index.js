@@ -1,4 +1,4 @@
-import { initData, initWatch } from './init/state.js';
+import { initData, initWatch,initComputed } from './init/state.js';
 import { patch, createEle } from './vdom/index.js'
 
 import { template2Function } from './render/index.js';
@@ -24,12 +24,6 @@ globalApi(Vue)
 stateMixin(Vue)
 
 
-
-
-
-
-
-
 Vue.prototype.$init = function () {
     this.$options = mergeOptions(this.constructor.$options, this.$options);
 
@@ -38,6 +32,7 @@ Vue.prototype.$init = function () {
     //做数据响应式
     initData(this);
     initWatch(this);
+    initComputed(this)
     //调用created
     callHook(this, 'created');
     //如果制定了el，则直接渲染

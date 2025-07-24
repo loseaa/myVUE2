@@ -2,16 +2,15 @@ import { Dep } from '../Dep.js'
 import { nextTick } from "../util.js"
 import { Watcher } from '../watcher.js'
 
+
 export function initData(vm) {
     //用户输入的data可能是一个对象 或者函数
     typeof vm.$data === 'function' ? vm.$data = vm.$data() : vm.$data;
     observer(vm.$data);
-
     //将data代理到vm上
     for (let key in vm.$data) {
         proxy(vm, key);
     }
-
 }
 
 export function initWatch(vm) {
@@ -24,11 +23,49 @@ export function initWatch(vm) {
                 })
             }
             else {
-                // console.log(watch[key]);
-
                 createWatcher(vm, key, watch[key]);
             }
         }
+    }
+}
+
+export function initComputed(vm) {
+    let computed = vm.$options.computed;
+    let watchers = vm._computedWatchers = {}
+    for (let key in computed) {
+        let makefull = {}
+        let userDef;
+        if (typeof computed[key] == 'function') {
+            makefull = {
+                get: createComputedGetter(key)
+            }
+            userDef=computed[key]
+        }
+        else {
+            makefull.get = createComputedGetter(key)
+            makefull.set = computed[key].set;
+            userDef=computed[key].get;
+        }
+        watchers[key] = new Watcher(vm, userDef, () => { }, { lazy: true })
+        defineComputed(vm, key, makefull)
+    }
+}
+
+function defineComputed(vm, key, makefull) {
+    Object.defineProperty(vm, key, makefull)
+}
+
+function createComputedGetter(key) {
+    return function () {
+        let watcher = this._computedWatchers[key];
+        //脏了就去取值
+        if (watcher.dirty) {
+            watcher.evaluate();
+        }
+        if (Dep.target) {
+            watcher.depend();
+        }
+        return watcher.value;
     }
 }
 
@@ -67,6 +104,7 @@ function proxy(vm, key) {
 }
 
 import { arrmethods } from '../array.js';
+import { lazy } from 'react';
 
 
 function observer(obj) {

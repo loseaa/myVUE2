@@ -1,6 +1,7 @@
 let id = 0;
 import { nextTick } from './util.js';
 import { popTarget, pushTarget } from './Dep.js'
+import{Dep} from './Dep.js'
 export class Watcher {
     constructor(vm, exprOrFn, cb, option = false) {
 
@@ -8,12 +9,13 @@ export class Watcher {
         this.exprOrFn = exprOrFn;
         this.cb = cb;
         this.user = option.user;
+        this.lazy = option.lazy;
+        this.dirty = option.lazy;
         this.id = id++;
         this.deps = [];
         this.depIds = new Set();
         if (typeof this.exprOrFn == "function") {
-            this.getter = this.exprOrFn;
-
+            this.getter = this.exprOrFn.bind(this.vm);
         }
         else {
             this.getter = function () {
@@ -27,8 +29,9 @@ export class Watcher {
                 return obj
             }
         }
-        this.value = this.get()
-
+        if (!this.lazy) {
+            this.value = this.get()
+        }
     }
     get() {
         pushTarget(this);
@@ -36,26 +39,35 @@ export class Watcher {
         popTarget()
         return res;
     }
-
-    run() {  
+    run() {
         let oldValue = this.value;
         let newValue = this.get();
         if (this.user) {
             this.cb(newValue, oldValue)
-        }else{
+        } else {
             this.cb();
-            
         }
         this.value = newValue;
     }
     update() {
-        queueWatcher(this)
+        if (this.lazy) {
+            this.dirty = true
+        } else
+            queueWatcher(this)
+    }
+
+    evaluate() {
+        this.value = this.get();
+        this.dirty = false;
     }
     addDep(dep) {
         if (this.depIds.has(dep.id))
             return
         this.depIds.add(dep.id);
         this.deps.push(dep);
+    }
+    depend(){
+        this.deps.forEach(dep=>dep.addSub(Dep.target));
     }
 }
 let queue = []

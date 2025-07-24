@@ -17,7 +17,6 @@ export function patch(oldVnode, newVnode) {
         if (newVnode.text) {
             newVnode.el = oldVnode.el;
             if(oldVnode.text!=newVnode.text){
-                console.log(oldVnode);
                 oldVnode.el.textContent = newVnode.text;
             }
             return oldVnode.el;

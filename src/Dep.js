@@ -15,16 +15,18 @@ export class Dep{
         
     }
     notify(){
-
-        
         this.subs.forEach(sub=>sub.update());
     }
 }
 Dep.target=null;
 
+let stack=[];
 export function pushTarget(target){
     Dep.target=target;
+    stack.push(target);
 }
+
 export function popTarget(){
-    Dep.target=null;
+    stack.pop();
+    Dep.target=stack[stack.length-1];
 }
