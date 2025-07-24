@@ -1,5 +1,5 @@
 import { initData, initWatch } from './init/state.js';
-import {patch,createEle} from './vdom/index.js'
+import { patch, createEle } from './vdom/index.js'
 
 import { template2Function } from './render/index.js';
 import { mountComponent } from './lifecycle.js';
@@ -12,6 +12,7 @@ import { stateMixin } from './init/state.js';
 export function Vue(option) {
     this.$el = option.el;
     this.$data = option.data;
+    
     this.$options = option;
     this.$init();
 }
@@ -27,7 +28,7 @@ stateMixin(Vue)
 
 
 
-    
+
 
 Vue.prototype.$init = function () {
     this.$options = mergeOptions(this.constructor.$options, this.$options);
@@ -58,40 +59,11 @@ Vue.prototype.$mount = function (el) {
         if (!template && this.$options.el) {
             template = document.querySelector(this.$options.el).outerHTML;
         }
-
         this.$options.render = template2Function(template);
     }
+
     this.$el = document.querySelector(el)
-
-
     mountComponent(vm, el);
 }
 
 
-//测试patch功能
-    let vm1 = new Vue({
-        data(){
-            return{
-                a:1,
-                b:2,
-            }
-        }
-    })
-    let render1=template2Function("<div style='color:red' x='1'>{{a}}</div>")
-    let vnode1=render1.call(vm1)
-
-    document.body.appendChild(createEle(vnode1))
-    
-    let vm2 = new Vue({
-        data(){
-            return{
-                a:1,
-                b:2,
-            }
-        }
-    })
-    let render2=template2Function("<div style='background:blue' class='a' y='2'></div>")
-    let vnode2=render2.call(vm2)
-setTimeout(()=>{
-    patch(vnode1,vnode2)
-},1000)

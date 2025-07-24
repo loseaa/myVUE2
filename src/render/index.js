@@ -115,7 +115,7 @@ function parseAST(html) {
 
 function generate(el) {
     let code = "";
-    code = `_c(${JSON.stringify(el.tagName)},${el.attrs?.length ? genAttrs(el.attrs) : 'undefined'},
+    code = `_c(${JSON.stringify(el.tagName)},${el.attrs?.length ? genAttrs(el.attrs) : 'undefined'},${el.attrs?.length ?JSON.stringify( JSON.parse(genAttrs(el.attrs))).key  : 'undefined'},
     ${generateChildren(el.children)})`
     return code
 }
@@ -140,9 +140,7 @@ function genAttrs(attrs) {
             obj[element.name] = Object.fromEntries(arr)
         }
     });
-
     return JSON.stringify(obj)
-
 }
 
 function generateText(child) {

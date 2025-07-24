@@ -6,8 +6,8 @@ export function renderMixin(Vue) {
         return this.$options.render.call(this)
     }
 
-    Vue.prototype._c = function (tag, attrs, ...children) {
-        return createElement(tag, attrs, children)
+    Vue.prototype._c = function (tag, attrs, key, ...children) {
+        return createElement(tag, attrs,key, children)
     }
 
     Vue.prototype._s = function (name) {
@@ -24,8 +24,8 @@ export function renderMixin(Vue) {
         return creatTextNode(text)
     }
 
-    function createElement(tag, attrs, children) {
-        return Vnode(tag, attrs, undefined, children, undefined)
+    function createElement(tag, attrs, key, children) {
+        return Vnode(tag, attrs, key, children, undefined)
 
     }
 

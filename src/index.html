@@ -8,8 +8,8 @@
 
 <body>
   <div id="app" class="container" style="color: red;font-size: 30px;background-color: blue;">
-    {{msg.a.b}}
-    world
+    <div>hello</div>
+    <p>{{msg.a.b}}</p>
   </div>
   <script src="myVue.js"></script>
   <script>
@@ -33,6 +33,12 @@
         console.log("beforeUpdate",this);
       }
     })
+    setTimeout(() => {
+      vm.msg.a.b='daada'
+    }, 1000);
+        setTimeout(() => {
+      vm.msg.a.b='456'
+    }, 2000);
 
 
 
